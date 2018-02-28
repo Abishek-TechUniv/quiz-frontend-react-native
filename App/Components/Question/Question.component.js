@@ -13,8 +13,7 @@ export default class Question extends React.Component {
       selected: '',
     };
   }
-  componentWillMount() {
-    this.props.check();
+  componentDidMount() {
   }
 
   click = (element) => {
@@ -65,7 +64,7 @@ export default class Question extends React.Component {
 
 
 Question.propTypes = {
-  // check: PropTypes.func.isRequired,
+  check: PropTypes.func.isRequired,
   response: PropTypes.shape({ response: PropTypes.string }),
   userName: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,

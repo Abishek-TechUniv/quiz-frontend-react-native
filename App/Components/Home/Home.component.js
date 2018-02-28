@@ -70,8 +70,7 @@ class Home extends Component {
 
   check() {
     axios.post('http://192.168.0.10:8080/users/response', { userName: this.state.userName })
-      .then(result => ((result.data.length === this.state.questions.length) ?
-        this.setState({ canComplete: true }) : null));
+      .then(result => (result.data.length === this.state.questions.length));
   }
 
   again() {
@@ -129,7 +128,7 @@ class Home extends Component {
         </View>
         <View style={styles.leaderboard}>
           <Text style={styles.leader_text}>Leaderboard</Text>
-          <Leaderboard scores={this.state.scores} />
+          <Leaderboard scores={this.state.scores} userName={this.state.userName} />
         </View>
         <TouchableHighlight
           style={styles.play_button}
