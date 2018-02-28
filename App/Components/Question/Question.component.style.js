@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   box: {
     borderWidth: 3,
+    margin: '2%',
   },
 
   questionNo: {

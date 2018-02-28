@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import axios from 'axios';
 
-import { View, Text } from 'react-native';
+import { View, Text, TouchableHighlight } from 'react-native';
 
 import styles from './Question.component.style';
 
@@ -11,54 +11,36 @@ export default class Question extends React.Component {
     // this.props.check();
   }
 
-  click = (radio) => {
-    // axios.post(
-    //   '/response',
-    //   { userName: this.props.userName, questionId: this.props.details.questionId, response: radio.currentTarget.value },
-    // ).then(() => this.props.check());
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: '',
+    };
+  }
+  click = (element) => {
+    this.setState({ selected: element });
+    axios.post(
+      '/response',
+      {
+        userName: this.props.userName,
+        questionId: this.props.questionId,
+        response: radio.currentTarget.value,
+      },
+    ).then(() => this.props.check());
   }
 
-  options = () =>
-    // this.props.details.options.map(element =>
-    //   (
-    //     <View className="Question-options" key={element}>
-    //       <Text className="Question-radio">
-    //         <Field
-    //           type="radio"
-    //           name={this.props.details.questionId}
-    //           onChange={this.click}
-    //           value={element}
-    //           checked={
-    //           this.props.selected.response === element ?
-    //           'checked' :
-    //            null}
-    //         />
-    //       </Text>
-    //       <Text>{element}</Text>
-    //     </View>
-    //   ));
-    (
-      <View style={styles.options}>
-        <View style={{ flexDirection: 'row', margin: '5%' }}>
-          <RadioButton selected={false} />
-          <Text style={styles.optionText}>a</Text>
-        </View>
-
-        <View style={{ flexDirection: 'row', margin: '5%' }}>
-          <RadioButton selected />
-          <Text style={styles.optionText}>b</Text>
-        </View>
-
-        <View style={{ flexDirection: 'row', margin: '5%' }}>
-          <RadioButton selected={false} />
-          <Text style={styles.optionText}>d</Text>
-        </View>
-
-        <View style={{ flexDirection: 'row', margin: '5%' }}>
-          <RadioButton selected={false} />
-          <Text style={styles.optionText}>c</Text>
-        </View>
-      </View>)
+  options = () => this.props.options.map(element => (
+    <View style={styles.options} key={element}>
+      <View style={{ flexDirection: 'row', margin: '5%' }}>
+        <TouchableHighlight
+          style={styles.play_button}
+          onPress={() => this.click(element)}
+        ><RadioButton selected={this.state.selected === element} />
+        </TouchableHighlight>
+        <Text style={styles.optionText}>{element}</Text>
+      </View>
+    </View>
+  ));
 
 
   render() {
@@ -68,9 +50,9 @@ export default class Question extends React.Component {
           <Text style={styles.questionNo}>Question {this.props.id + 1}</Text>
         </View>
         <View style={styles.questionBox}>
-          <Text>{this.props.details.question}</Text>
+          <Text>{this.props.question}</Text>
         </View>
-        <View>{this.options()}</View>
+        { <View>{this.options()}</View> }
       </View>);
   }
 }
@@ -84,11 +66,9 @@ Question.propTypes = {
   }),
   userName: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  details: PropTypes.shape({
-    questionId: PropTypes.number,
-    question: PropTypes.string,
-    options: PropTypes.array,
-  }).isRequired,
+  questionId: PropTypes.number.isRequired,
+  question: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 Question.defaultProps = {

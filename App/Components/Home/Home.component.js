@@ -11,42 +11,33 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'result',
-      userName: '',
+      page: 'questions',
+      userName: 'ass',
       score: 0,
       total: 12,
       scores: [
-        { userName: 'Abishek', score: 5 },
-        { userName: 'Aditya', score: 4 },
       ],
-      questions: [{
-        questionId: 12, options: ['a', 'b', 'c', 'd'], question: 'Which is the second alphabet?', correctAns: 'b',
-      }],
-      selected: [{ questionId: 12, response: 'b' }],
+      questions: [],
+      selected: [],
       canComplete: false,
     };
   }
 
 
   componentDidMount() {
-    // axios.get('http://192.168.0.10:8080/questions')
-    //   .then((questions) => {
-    //     if (questions.data.length === 0) {
-    //       axios.put('/questions')
-    //         .then(() => {
-    //           axios.get('/questions')
-    //             .then(qArr => this.setState({
-    //               questions: qArr.data,
-    //             }));
-    //         });
-    //     } else { this.setState({ questions: questions.data }); }
-    //   });
-  }
-
-  update = (e) => {
-    // this.setState({
-    //   userName: e.target.value,
-    // });
+    const url = 'http://localhost:8080/questions';
+    axios.get(url)
+      .then((questions) => {
+        if (questions.data.length === 0) {
+          axios.put(url)
+            .then(() => {
+              axios.get(url)
+                .then(qArr => this.setState({
+                  questions: qArr.data,
+                }));
+            });
+        } else { this.setState({ questions: questions.data }); }
+      }).catch(err => console.error(err));
   }
 
   calculate = () => {
@@ -70,15 +61,14 @@ class Home extends Component {
   }
 
   login() {
-    // axios.post('http://192.168.0.10:8080/users', { userName: this.state.userName });
-    // axios.post('http://192.168.0.10:8080/users/response', { userName: this.state.userName })
-    //   .then(result => this.setState({
-    //     page: 'questions',
-    //     selected: result.data,
-    //   }));
+    axios.post('http://localhost:8080/users', { userName: this.state.userName });
+    axios.post('http://localhost:8080/users/response', { userName: this.state.userName })
+      .then(result => this.setState({
+        page: 'questions',
+        selected: result.data,
+      }));
     this.setState({
       page: 'questions',
-      userName: 'ABC',
     });
   }
 
@@ -102,7 +92,10 @@ class Home extends Component {
           <View style={styles.bottom}>
             <Text style={styles.login_text}>Login</Text>
             <Text style={styles.user_name}>Username</Text>
-            <TextInput style={styles.input} onChange={e => this.update(e)} />
+            <TextInput
+              style={styles.input}
+              onChangeText={text => this.setState({ userName: text })}
+            />
             <TouchableHighlight
               style={styles.login_button}
               onPress={() => this.login()}

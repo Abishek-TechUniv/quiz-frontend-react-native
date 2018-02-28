@@ -60,6 +60,7 @@ export default StyleSheet.create({
     alignSelf: 'flex-start',
     height: '10%',
     margin: '2%',
+    marginTop: '5%',
   },
 
   result_container: {
