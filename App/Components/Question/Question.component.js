@@ -7,16 +7,16 @@ import { View, Text, TouchableHighlight } from 'react-native';
 import styles from './Question.component.style';
 
 export default class Question extends React.Component {
-  componentDidMount() {
-    // this.props.check();
-  }
-
   constructor(props) {
     super(props);
     this.state = {
       selected: '',
     };
   }
+  componentWillMount() {
+    this.props.check();
+  }
+
   click = (element) => {
     this.setState({ selected: element });
     axios.post(
@@ -29,13 +29,19 @@ export default class Question extends React.Component {
     );
   }
 
+  isSelected = (element) => {
+    if (this.state.selected === '') {
+      return this.props.response.response === element;
+    }
+    return this.state.selected === element;
+  }
   options = () => this.props.options.map(element => (
     <View style={styles.options} key={element}>
       <View style={{ flexDirection: 'row', margin: '5%' }}>
         <TouchableHighlight
           style={styles.play_button}
           onPress={() => this.click(element)}
-        ><RadioButton selected={this.state.selected === element} />
+        ><RadioButton selected={this.isSelected(element)} />
         </TouchableHighlight>
         <Text style={styles.optionText}>{element}</Text>
       </View>
@@ -52,7 +58,7 @@ export default class Question extends React.Component {
         <View style={styles.questionBox}>
           <Text>{this.props.question}</Text>
         </View>
-        { <View>{this.options()}</View> }
+        <View>{this.options()}</View>
       </View>);
   }
 }
@@ -60,10 +66,7 @@ export default class Question extends React.Component {
 
 Question.propTypes = {
   // check: PropTypes.func.isRequired,
-  // selected: PropTypes.shape({
-  //   questionId: PropTypes.number,
-  //   response: PropTypes.string,
-  // }),
+  response: PropTypes.shape({ response: PropTypes.string }),
   userName: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   questionId: PropTypes.number.isRequired,
@@ -72,12 +75,12 @@ Question.propTypes = {
 };
 
 Question.defaultProps = {
-  // selected: {},
+  response: { option: '' },
 };
 
 function RadioButton(props) {
   return (
-    <View style={[{
+    <View style={{
         height: 12,
         width: 12,
         borderRadius: 12,
@@ -85,7 +88,7 @@ function RadioButton(props) {
         borderColor: '#000',
         alignItems: 'center',
         justifyContent: 'center',
-      }, props.style]}
+      }}
     >
       {props.selected ?
         <View style={{

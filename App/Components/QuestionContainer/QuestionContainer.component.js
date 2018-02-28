@@ -15,7 +15,8 @@ const QuestionContainer = (props) => {
       options={question.options}
       questionId={question.questionId}
       key={question.questionId}
-      selected={props.responses.find(x => x.questionId === question.questionId)}
+      response={props.responses
+        .find(x => x.questionId === question.questionId)}
     />));
   return <ScrollView style={styles.questions}>{questions}</ScrollView>;
 };

@@ -69,10 +69,9 @@ class Home extends Component {
   }
 
   check() {
-    // axios.post('http://192.168.0.10:8080/users/response', { userName: this.state.userName })
-    //   .then(result => ((result.data.length === this.state.questions.length) ?
-    //     this.setState({ canComplete: true }) : null));
-    this.setState({ canComplete: true });
+    axios.post('http://192.168.0.10:8080/users/response', { userName: this.state.userName })
+      .then(result => ((result.data.length === this.state.questions.length) ?
+        this.setState({ canComplete: true }) : null));
   }
 
   again() {
@@ -105,7 +104,7 @@ class Home extends Component {
         <View style={styles.container}>
           <Text style={styles.hello}>Hello {this.state.userName}</Text>
           <QuestionContainer
-            check={this.check}
+            check={() => this.check()}
             userName={this.state.userName}
             responses={this.state.selected}
             questions={this.state.questions}
@@ -113,6 +112,7 @@ class Home extends Component {
           <TouchableHighlight
             style={styles.login_button}
             onPress={() => this.calculate()}
+            disabled={this.state.canComplete}
           ><Text style={styles.text}>Complete</Text>
           </TouchableHighlight>
         </View>
