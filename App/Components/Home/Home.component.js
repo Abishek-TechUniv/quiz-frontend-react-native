@@ -71,9 +71,10 @@ class Home extends Component {
   }
 
   check = () => {
-    // axios.post('/users/response', { userName: this.state.userName })
-    //   .then(result => ((result.data.length === this.state.questions.length) ?
-    //     this.setState({ canComplete: true }) : null));
+    axios.post('http://localhost:8080/users/response', { userName: this.state.userName })
+      .then(result => ((result.data.length === this.state.questions.length) ?
+        this.setState({ canComplete: true }) : this.setState({ canComplete: false })))
+      .catch(err => console.log(err));
   }
 
 
@@ -117,14 +118,14 @@ class Home extends Component {
           <Text style={styles.hello}>Hello {this.state.userName}</Text>
           <ScrollView>
             <QuestionContainer
-              check={() => this.check()}
+              check={this.check}
               userName={this.state.userName}
               responses={this.state.selected}
               questions={this.state.questions}
             />
             <TouchableHighlight
               style={styles.login_button}
-              onPress={() => (this.state.canComplete ? console.log('error') : this.calculate())}
+              onPress={() => (this.state.canComplete ? this.calculate() : console.log('oops'))}
             ><Text style={styles.text}>Complete</Text>
             </TouchableHighlight>
           </ScrollView>

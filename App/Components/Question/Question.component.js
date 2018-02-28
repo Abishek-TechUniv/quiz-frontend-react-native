@@ -14,12 +14,12 @@ export default class Question extends React.Component {
       selected: '',
     };
   }
+
   componentDidMount() {
     this.props.check();
   }
 
   click = (element) => {
-    this.props.check();
     this.setState({ selected: element });
     axios.post(
       'http://localhost:8080/response',
@@ -28,7 +28,7 @@ export default class Question extends React.Component {
         questionId: this.props.questionId,
         response: element,
       },
-    );
+    ).then(() => this.props.check());
   }
 
   isSelected = (element) => {
