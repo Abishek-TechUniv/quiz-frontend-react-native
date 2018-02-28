@@ -54,4 +54,63 @@ export default StyleSheet.create({
     padding: 2,
   },
 
+  hello: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    alignSelf: 'flex-start',
+    height: '10%',
+    margin: '2%',
+  },
+
+  result_container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  result: {
+    flex: 1,
+    height: '15%',
+    margin: '5%',
+  },
+
+  leaderboard: {
+    height: '50%',
+    margin: '5%',
+  },
+
+  play_button: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: '10%',
+    width: 100,
+    height: 30,
+    borderWidth: 2,
+    borderRadius: 10,
+    marginBottom: '5%',
+  },
+
+  your_score: {
+    alignSelf: 'center',
+    color: 'orange',
+    fontSize: 30,
+    marginBottom: '5%',
+  },
+
+  score: {
+    fontSize: 34,
+    alignSelf: 'flex-end',
+  },
+
+  total: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    alignSelf: 'flex-end',
+  },
+
+  leader_text: {
+    fontSize: 20,
+    alignSelf: 'center',
+  },
 });
