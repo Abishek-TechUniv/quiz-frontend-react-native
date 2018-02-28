@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { View } from 'react-native';
 
 import styles from './QuestionContainer.component.style';
 import Question from '../Question/Question.component';
@@ -18,7 +18,7 @@ const QuestionContainer = (props) => {
       response={props.responses
         .find(x => x.questionId === question.questionId)}
     />));
-  return <ScrollView style={styles.questions}>{questions}</ScrollView>;
+  return <View style={styles.questions}>{questions}</View>;
 };
 
 QuestionContainer.propTypes = {

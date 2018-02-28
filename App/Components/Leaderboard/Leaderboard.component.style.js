@@ -6,12 +6,12 @@ export default StyleSheet.create({
   },
 
   details: {
-    width: '80%',
-    backgroundColor: 'powderblue',
+    width: '96%',
+    backgroundColor: 'rgb(67,200,245)',
     marginTop: '5%',
     marginBottom: '2%',
-    marginLeft: '10%',
-    marginRight: '10%',
+    marginLeft: '2%',
+    marginRight: '2%',
     padding: '2%',
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -19,12 +19,12 @@ export default StyleSheet.create({
   },
 
   color_details: {
-    width: '80%',
+    width: '96%',
     backgroundColor: 'pink',
     marginTop: '5%',
     marginBottom: '2%',
-    marginLeft: '10%',
-    marginRight: '10%',
+    marginLeft: '2%',
+    marginRight: '2%',
     padding: '2%',
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -36,10 +36,14 @@ export default StyleSheet.create({
   },
 
   name: {
+    color: 'white',
+    fontWeight: 'bold',
     fontSize: 20,
   },
 
   score: {
+    color: 'white',
+    fontWeight: 'bold',
     fontSize: 20,
   },
 });

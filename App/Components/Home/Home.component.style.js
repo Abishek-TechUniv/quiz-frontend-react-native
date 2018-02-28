@@ -10,12 +10,24 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'powderblue',
+    backgroundColor: 'rgb(67,200,245)',
   },
 
   welcome: {
     alignSelf: 'center',
-    fontSize: 30,
+    margin: '2%',
+    fontSize: 40,
+    fontWeight: '700',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  quizzy: {
+    color: 'white',
+    alignSelf: 'center',
+    margin: '2%',
+    fontSize: 42,
+    fontWeight: '700',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -26,18 +38,24 @@ export default StyleSheet.create({
   },
 
   login_text: {
+    fontWeight: 'bold',
     fontSize: 20,
     margin: '5%',
+    marginBottom: '20%',
   },
 
   user_name: {
-    marginLeft: '10%',
+    fontWeight: 'bold',
+    marginLeft: '5%',
   },
 
   input: {
     alignSelf: 'center',
     borderWidth: 1,
-    width: '80%',
+    height: 35,
+    marginTop: '2%',
+    marginBottom: '5%',
+    width: '90%',
   },
 
   login_button: {
@@ -72,35 +90,35 @@ export default StyleSheet.create({
 
   result: {
     flex: 1,
-    height: '15%',
+    height: '5%',
     margin: '5%',
   },
 
   leaderboard: {
-    height: '50%',
+    height: '60%',
     margin: '5%',
   },
 
   play_button: {
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: '10%',
+    marginBottom: '10%',
     width: 100,
     height: 30,
     borderWidth: 2,
     borderRadius: 10,
-    marginBottom: '5%',
   },
 
   your_score: {
+    marginTop: '-18%',
     alignSelf: 'center',
     color: 'orange',
     fontSize: 30,
-    marginBottom: '5%',
   },
 
   score: {
     fontSize: 34,
+    fontWeight: '300',
     alignSelf: 'flex-end',
   },
 
@@ -111,7 +129,8 @@ export default StyleSheet.create({
   },
 
   leader_text: {
-    fontSize: 20,
+    fontWeight: 'bold',
+    fontSize: 30,
     alignSelf: 'center',
   },
 });

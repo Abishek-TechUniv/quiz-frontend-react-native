@@ -5,6 +5,7 @@ import axios from 'axios';
 import { View, Text, TouchableHighlight } from 'react-native';
 
 import styles from './Question.component.style';
+import RadioButton from '../RadioButton/RadioButton.component';
 
 export default class Question extends React.Component {
   constructor(props) {
@@ -14,9 +15,11 @@ export default class Question extends React.Component {
     };
   }
   componentDidMount() {
+    this.props.check();
   }
 
   click = (element) => {
+    this.props.check();
     this.setState({ selected: element });
     axios.post(
       'http://localhost:8080/response',
@@ -76,29 +79,3 @@ Question.propTypes = {
 Question.defaultProps = {
   response: { option: '' },
 };
-
-function RadioButton(props) {
-  return (
-    <View style={{
-        height: 12,
-        width: 12,
-        borderRadius: 12,
-        borderWidth: 2,
-        borderColor: '#000',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      {props.selected ?
-        <View style={{
-              height: 12,
-              width: 12,
-              borderRadius: 6,
-              backgroundColor: '#000',
-            }}
-        />
-      : null
-        }
-    </View>
-  );
-}

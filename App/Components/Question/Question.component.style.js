@@ -12,9 +12,10 @@ export default StyleSheet.create({
   },
 
   questionBox: {
-    backgroundColor: 'powderblue',
+    backgroundColor: 'rgb(67,200,245)',
     borderWidth: 2,
     padding: '2%',
+    margin: '1%',
   },
 
   optionText: {

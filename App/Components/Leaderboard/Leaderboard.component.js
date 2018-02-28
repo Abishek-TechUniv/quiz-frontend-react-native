@@ -12,7 +12,7 @@ const Leaderboard = (props) => {
      styles.color_details : styles.details}
       key={leader.userName}
     >
-      <Text style={styles.id}>{idx + 1}</Text>
+      <Text style={styles.id}>{idx + 1}.</Text>
       <Text style={styles.name}>{leader.userName}</Text>
       <Text style={styles.score}>{leader.score}</Text>
     </View>));

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, View, Text, TouchableHighlight } from 'react-native';
+import { TextInput, View, Text, TouchableHighlight, ScrollView } from 'react-native';
 import axios from 'axios';
 
 import styles from './Home.component.style';
@@ -15,8 +15,7 @@ class Home extends Component {
       userName: '',
       score: 0,
       total: 12,
-      scores: [
-      ],
+      scores: [],
       questions: [],
       selected: [],
       canComplete: false,
@@ -53,35 +52,49 @@ class Home extends Component {
             scores: data,
             score: data.find(x => x.userName === this.state.userName).score,
           });
-        }));
+        })).catch(err => console.log(err));
   }
 
   login() {
-    axios.post('http://localhost:8080/users', { userName: this.state.userName });
-    axios.post('http://localhost:8080/users/response', { userName: this.state.userName })
-      .then(result => this.setState({
+    if (this.state.userName === '') this.setState({ page: 'login' });
+    else {
+      axios.post('http://localhost:8080/users', { userName: this.state.userName });
+      axios.post('http://localhost:8080/users/response', { userName: this.state.userName })
+        .then(result => this.setState({
+          page: 'questions',
+          selected: result.data,
+        }));
+      this.setState({
         page: 'questions',
-        selected: result.data,
-      }));
-    this.setState({
-      page: 'questions',
-    });
+      });
+    }
   }
 
-  check() {
-    axios.post('http://192.168.0.10:8080/users/response', { userName: this.state.userName })
-      .then(result => (result.data.length === this.state.questions.length));
+  check = () => {
+    // axios.post('/users/response', { userName: this.state.userName })
+    //   .then(result => ((result.data.length === this.state.questions.length) ?
+    //     this.setState({ canComplete: true }) : null));
   }
+
 
   again() {
-    this.setState({ page: 'login', userName: '' });
+    this.setState({
+      page: 'login',
+      userName: '',
+      score: 0,
+      scores: [],
+      selected: [],
+      canComplete: false,
+    });
   }
   render() {
     if (this.state.page === 'login') {
       return (
         <View style={styles.container}>
           <View style={styles.top}>
-            <Text style={styles.welcome}>Welcome to Quizzy</Text>
+            <Text style={styles.welcome}>Welcome</Text>
+            <Text style={styles.welcome}>to</Text>
+            <Text style={styles.quizzy}>Quizzy!</Text>
           </View>
           <View style={styles.bottom}>
             <Text style={styles.login_text}>Login</Text>
@@ -102,18 +115,19 @@ class Home extends Component {
       return (
         <View style={styles.container}>
           <Text style={styles.hello}>Hello {this.state.userName}</Text>
-          <QuestionContainer
-            check={() => this.check()}
-            userName={this.state.userName}
-            responses={this.state.selected}
-            questions={this.state.questions}
-          />
-          <TouchableHighlight
-            style={styles.login_button}
-            onPress={() => this.calculate()}
-            disabled={this.state.canComplete}
-          ><Text style={styles.text}>Complete</Text>
-          </TouchableHighlight>
+          <ScrollView>
+            <QuestionContainer
+              check={() => this.check()}
+              userName={this.state.userName}
+              responses={this.state.selected}
+              questions={this.state.questions}
+            />
+            <TouchableHighlight
+              style={styles.login_button}
+              onPress={() => (this.state.canComplete ? console.log('error') : this.calculate())}
+            ><Text style={styles.text}>Complete</Text>
+            </TouchableHighlight>
+          </ScrollView>
         </View>
       );
     } return (
