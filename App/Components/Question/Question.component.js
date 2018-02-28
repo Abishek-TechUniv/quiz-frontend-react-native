@@ -20,13 +20,13 @@ export default class Question extends React.Component {
   click = (element) => {
     this.setState({ selected: element });
     axios.post(
-      '/response',
+      'http://localhost:8080/response',
       {
         userName: this.props.userName,
         questionId: this.props.questionId,
-        response: radio.currentTarget.value,
+        response: element,
       },
-    ).then(() => this.props.check());
+    );
   }
 
   options = () => this.props.options.map(element => (
@@ -59,11 +59,11 @@ export default class Question extends React.Component {
 
 
 Question.propTypes = {
-  check: PropTypes.func.isRequired,
-  selected: PropTypes.shape({
-    questionId: PropTypes.number,
-    response: PropTypes.string,
-  }),
+  // check: PropTypes.func.isRequired,
+  // selected: PropTypes.shape({
+  //   questionId: PropTypes.number,
+  //   response: PropTypes.string,
+  // }),
   userName: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   questionId: PropTypes.number.isRequired,
@@ -72,7 +72,7 @@ Question.propTypes = {
 };
 
 Question.defaultProps = {
-  selected: {},
+  // selected: {},
 };
 
 function RadioButton(props) {

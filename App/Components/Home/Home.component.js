@@ -11,8 +11,8 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 'questions',
-      userName: 'ass',
+      page: 'login',
+      userName: '',
       score: 0,
       total: 12,
       scores: [
@@ -41,23 +41,19 @@ class Home extends Component {
   }
 
   calculate = () => {
-    // const { userName } = this.state;
-    // axios.post('/calculate', { userName })
-    //   .then(() => this.setState({
-    //     page: 'scoreboard',
-    //     userName,
-    //   }))
-    //   .then(() => axios.get('/scores')
-    //     .then(({ data }) => {
-    //       this.setState({
-    //         scores: data,
-    //         score: data.find(x => x.userName === this.state.userName).score,
-    //       });
-    //     }));
-    this.setState({
-      page: 'result',
-      score: 5,
-    });
+    const { userName } = this.state;
+    axios.post('http://localhost:8080/calculate', { userName })
+      .then(() => this.setState({
+        page: 'scoreboard',
+        userName,
+      }))
+      .then(() => axios.get('http://localhost:8080/scores')
+        .then(({ data }) => {
+          this.setState({
+            scores: data,
+            score: data.find(x => x.userName === this.state.userName).score,
+          });
+        }));
   }
 
   login() {
@@ -80,7 +76,7 @@ class Home extends Component {
   }
 
   again() {
-    this.setState({ page: 'login' });
+    this.setState({ page: 'login', userName: '' });
   }
   render() {
     if (this.state.page === 'login') {
